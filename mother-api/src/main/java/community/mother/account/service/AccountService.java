@@ -27,15 +27,15 @@ public class AccountService {
 										.collect(Collectors.toList()));
 	}
 
-	public Long saveAccount(SaveAccountParams saveAccountParams) {
-		String encodedPassword = passwordEncoder.encode(saveAccountParams.getPassword());
+	public Long saveAccount(SaveAccountParams accountParams) {
+		String encodedPassword = passwordEncoder.encode(accountParams.getPassword());
 		LocalDateTime createdAt = LocalDateTime.now();
 		AccountStatus userStatus = AccountStatus.CREATED;
 
 		Account account = Account.builder()
-				.email(saveAccountParams.getEmail())
-				.nickname(saveAccountParams.getNickname())
-				.username(saveAccountParams.getUsername())
+				.email(accountParams.getEmail())
+				.nickname(accountParams.getNickname())
+				.username(accountParams.getUsername())
 				.password(encodedPassword)
 				.createdAt(createdAt)
 				.userStatus(userStatus).build();

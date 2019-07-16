@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/accounts")
@@ -20,7 +22,7 @@ public class AccountRestController {
 	}
 
 	@PostMapping
-	public void saveAccount(@RequestBody SaveAccountParams saveAccountParams) {
-		accountService.saveAccount(saveAccountParams);
+	public void saveAccount(@RequestBody SaveAccountParams accountParams) {
+		accountService.saveAccount(accountParams);
 	}
 }
