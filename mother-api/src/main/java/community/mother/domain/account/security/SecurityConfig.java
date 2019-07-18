@@ -1,4 +1,4 @@
-package community.mother.account.security;
+package community.mother.domain.account.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,8 +1,9 @@
-package community.mother.account.controller;
+package community.mother.domain.account.controller;
 
-import community.mother.account.dto.request.SaveAccountParams;
-import community.mother.account.dto.response.AccountListResponse;
-import community.mother.account.service.AccountService;
+import community.mother.domain.account.dto.request.LoginAccountParams;
+import community.mother.domain.account.dto.request.SaveAccountParams;
+import community.mother.domain.account.dto.response.AccountListResponse;
+import community.mother.domain.account.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -24,5 +25,10 @@ public class AccountRestController {
 	@PostMapping
 	public void saveAccount(@RequestBody SaveAccountParams accountParams) {
 		accountService.saveAccount(accountParams);
+	}
+
+	@PostMapping("/login")
+	public void login(@RequestBody LoginAccountParams accountParams, HttpSession session) {
+		accountService.login(accountParams, session);
 	}
 }

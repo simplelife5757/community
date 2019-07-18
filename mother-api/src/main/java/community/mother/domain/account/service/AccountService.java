@@ -1,16 +1,20 @@
-package community.mother.account.service;
+package community.mother.domain.account.service;
 
-import community.mother.account.domain.Account;
-import community.mother.account.domain.AccountRepository;
-import community.mother.account.domain.AccountStatus;
-import community.mother.account.dto.request.SaveAccountParams;
-import community.mother.account.dto.response.AccountDetail;
-import community.mother.account.dto.response.AccountListResponse;
+import community.mother.domain.account.domain.Account;
+import community.mother.domain.account.domain.AccountRepository;
+import community.mother.domain.account.domain.AccountStatus;
+import community.mother.domain.account.dto.request.LoginAccountParams;
+import community.mother.domain.account.dto.request.SaveAccountParams;
+import community.mother.domain.account.dto.response.AccountDetail;
+import community.mother.domain.account.dto.response.AccountListResponse;
+import community.mother.domain.account.exception.EmailNotFoundException;
+import community.mother.domain.account.exception.PasswordMismatchException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
@@ -40,5 +44,16 @@ public class AccountService {
 				.createdAt(createdAt)
 				.userStatus(userStatus).build();
 		return accountRepository.save(account).getId();
+	}
+
+	public void login(LoginAccountParams accountParams, HttpSession session) {
+		String email = accountParams.getEmail();
+		Account account = accountRepository.findByEmail(email).orElseThrow(EmailNotFoundException::new);
+		if (account.matchPassword(accountParams.getPassword(), passwordEncoder)) {
+			log.info("login success! accountParams={}", accountParams);
+			session.setAttribute("LOGIN_ACCOUNT", account);
+			return;
+		}
+		throw new PasswordMismatchException();
 	}
 }

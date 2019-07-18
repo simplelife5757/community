@@ -1,8 +1,9 @@
-package community.mother.account.domain;
+package community.mother.domain.account.domain;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
@@ -70,5 +71,9 @@ public class Account {
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 		this.userStatus = userStatus;
+	}
+
+	public boolean matchPassword(String password, PasswordEncoder passwordEncoder) {
+		return passwordEncoder.matches(password, this.password);
 	}
 }

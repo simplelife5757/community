@@ -1,4 +1,4 @@
-package community.mother.account.dto.response;
+package community.mother.domain.account.dto.response;
 
 import lombok.Getter;
 

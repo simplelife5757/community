@@ -1,4 +1,4 @@
-package community.mother.account.domain;
+package community.mother.domain.account.domain;
 
 public enum AccountStatus {
 	CREATED("created"),

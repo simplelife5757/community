@@ -1,4 +1,4 @@
-package community.mother.account.dto.request;
+package community.mother.domain.account.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
