@@ -1,4 +1,4 @@
-package community.mother.notice.domain;
+package community.mother.domain.notice.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

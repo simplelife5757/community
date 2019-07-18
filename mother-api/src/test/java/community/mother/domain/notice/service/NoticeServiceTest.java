@@ -1,14 +1,14 @@
-package community.mother.notice.service;
+package community.mother.domain.notice.service;
 
-import community.mother.notice.domain.Notice;
-import community.mother.notice.domain.NoticeRepository;
+import community.mother.domain.notice.domain.Notice;
+import community.mother.domain.notice.domain.NoticeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static community.mother.notice.domain.NoticeTest.getNoticeFixture;
+import static community.mother.domain.notice.domain.NoticeTest.getNoticeFixture;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
