@@ -43,3 +43,22 @@ Content-Type: application/json
 }
 
 ###
+
+POST http://localhost:8080/api/accounts/1
+Content-Type: application/json
+
+{
+  "username" : "sdf",
+  "nickname" : "kiki",
+  "website" : "kiki",
+  "description" : "지우짱",
+  "email" : "asdf",
+  "phone" : "asv",
+  "gender" : "asdf"
+}
+
+###
+
+DELETE http://localhost:8080/api/accounts/1
+
+###

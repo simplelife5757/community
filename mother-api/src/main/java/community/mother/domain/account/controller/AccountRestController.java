@@ -1,5 +1,6 @@
 package community.mother.domain.account.controller;
 
+import community.mother.domain.account.dto.request.UpdateAccountParams;
 import community.mother.domain.account.dto.request.LoginAccountParams;
 import community.mother.domain.account.dto.request.SaveAccountParams;
 import community.mother.domain.account.dto.response.AccountListResponse;
@@ -23,12 +24,22 @@ public class AccountRestController {
 	}
 
 	@PostMapping
-	public void saveAccount(@RequestBody SaveAccountParams accountParams) {
-		accountService.saveAccount(accountParams);
+	public void create(@RequestBody SaveAccountParams accountParams) {
+		accountService.createAccount(accountParams);
 	}
 
 	@PostMapping("/login")
 	public void login(@RequestBody LoginAccountParams accountParams, HttpSession session) {
 		accountService.login(accountParams, session);
+	}
+
+	@PostMapping("/{id}")
+	public void update(@PathVariable Long id, @RequestBody UpdateAccountParams accountParams) {
+		accountService.updateAccount(id, accountParams);
+	}
+
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable Long id) {
+		accountService.deleteAccount(id);
 	}
 }

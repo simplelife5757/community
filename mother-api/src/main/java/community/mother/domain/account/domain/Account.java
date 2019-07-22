@@ -9,6 +9,8 @@ import org.springframework.util.Assert;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import static java.time.LocalDateTime.now;
+
 @Getter
 @Entity
 @NoArgsConstructor
@@ -37,23 +39,17 @@ public class Account {
 	@Column(nullable = false)
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+	private LocalDateTime deletedAt;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	private AccountStatus userStatus;
+	private AccountStatus accountStatus;
 
 	@Builder
 	public Account(String email,
 				   String nickname,
 				   String username,
-				   String password,
-				   String website,
-				   String description,
-				   String phone,
-				   String gender,
-				   LocalDateTime createdAt,
-				   LocalDateTime updatedAt,
-				   AccountStatus userStatus
+				   String password
 	) {
 		Assert.hasLength(email, "email should not be empty.");
 		Assert.hasLength(nickname, "nickname should not be empty.");
@@ -64,16 +60,31 @@ public class Account {
 		this.nickname = nickname;
 		this.username = username;
 		this.password = password;
-		this.website = website;
-		this.description = description;
-		this.phone = phone;
-		this.gender = gender;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
-		this.userStatus = userStatus;
+		this.createdAt = now();
+		this.accountStatus = AccountStatus.CREATED;
 	}
 
 	public boolean matchPassword(String password, PasswordEncoder passwordEncoder) {
 		return passwordEncoder.matches(password, this.password);
+	}
+
+	public void update(String username, String nickname, String website, String description, String email, String phone, String gender) {
+		this.username = username;
+		this.nickname = nickname;
+		this.website = website;
+		this.description = description;
+		this.email = email;
+		this.phone = phone;
+		this.gender = gender;
+		this.updatedAt = now();
+	}
+
+	public void delete() {
+		this.accountStatus = AccountStatus.DELETED;
+		this.deletedAt = now();
+	}
+
+	public boolean isDeleted() {
+		return this.accountStatus == AccountStatus.DELETED;
 	}
 }

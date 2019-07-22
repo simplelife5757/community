@@ -2,11 +2,12 @@ package community.mother.domain.account.service;
 
 import community.mother.domain.account.domain.Account;
 import community.mother.domain.account.domain.AccountRepository;
-import community.mother.domain.account.domain.AccountStatus;
 import community.mother.domain.account.dto.request.LoginAccountParams;
 import community.mother.domain.account.dto.request.SaveAccountParams;
+import community.mother.domain.account.dto.request.UpdateAccountParams;
 import community.mother.domain.account.dto.response.AccountDetail;
 import community.mother.domain.account.dto.response.AccountListResponse;
+import community.mother.domain.account.exception.AccountNotFoundException;
 import community.mother.domain.account.exception.EmailNotFoundException;
 import community.mother.domain.account.exception.PasswordMismatchException;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -31,18 +31,15 @@ public class AccountService {
 										.collect(Collectors.toList()));
 	}
 
-	public Long saveAccount(SaveAccountParams accountParams) {
+	public Long createAccount(SaveAccountParams accountParams) {
 		String encodedPassword = passwordEncoder.encode(accountParams.getPassword());
-		LocalDateTime createdAt = LocalDateTime.now();
-		AccountStatus userStatus = AccountStatus.CREATED;
 
 		Account account = Account.builder()
 				.email(accountParams.getEmail())
 				.nickname(accountParams.getNickname())
 				.username(accountParams.getUsername())
 				.password(encodedPassword)
-				.createdAt(createdAt)
-				.userStatus(userStatus).build();
+				.build();
 		return accountRepository.save(account).getId();
 	}
 
@@ -55,5 +52,28 @@ public class AccountService {
 			return;
 		}
 		throw new PasswordMismatchException();
+	}
+
+	public void updateAccount(Long id, UpdateAccountParams accountParams) {
+		Account account = findAccountById(id);
+		account.update(accountParams.getUsername(), accountParams.getNickname(), accountParams.getWebsite(), accountParams.getDescription()
+				, accountParams.getEmail(), accountParams.getPhone(), accountParams.getGender());
+		accountRepository.save(account);
+	}
+
+	public void deleteAccount(Long id) {
+		Account account = findAccountById(id);
+		account.delete();
+		accountRepository.save(account);
+	}
+
+	private Account findAccountById(Long id) {
+		Account account = accountRepository.findById(id).orElseThrow(AccountNotFoundException::new);
+
+		if(account.isDeleted()) {
+			throw new AccountNotFoundException();
+		}
+
+		return account;
 	}
 }
