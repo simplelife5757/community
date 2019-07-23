@@ -1,24 +1,31 @@
 package community.mother.domain.account.domain;
 
 import community.mother.domain.model.Email;
+import community.mother.domain.post.domain.Post;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.time.LocalDateTime.now;
 
 @Getter
+@Table(name = "account")
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "USER_ID")
+	@Column(name = "ACCOUNT_ID")
 	private Long id;
 
 	@Embedded
@@ -32,13 +39,20 @@ public class Account {
 
 	@Column(nullable = false)
 	private String password;
+
+	@OneToMany(mappedBy = "account", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
+	private List<Post> posts = new ArrayList<>();
+
 	private String website;
 	private String description;
 	private String phone;
 	private String gender;
 
+	@CreationTimestamp
 	@Column(nullable = false)
 	private LocalDateTime createdAt;
+
+	@UpdateTimestamp
 	private LocalDateTime updatedAt;
 	private LocalDateTime deletedAt;
 
@@ -47,7 +61,7 @@ public class Account {
 	private AccountStatus accountStatus;
 
 	@Builder
-	public Account(Email email,
+	private Account(Email email,
 				   String nickname,
 				   String username,
 				   String password
@@ -61,7 +75,7 @@ public class Account {
 		this.nickname = nickname;
 		this.username = username;
 		this.password = password;
-		this.createdAt = now();
+//		this.createdAt = now();
 		this.accountStatus = AccountStatus.CREATED;
 	}
 
@@ -77,7 +91,7 @@ public class Account {
 		this.email = email;
 		this.phone = phone;
 		this.gender = gender;
-		this.updatedAt = now();
+//		this.updatedAt = now();
 	}
 
 	public void delete() {
