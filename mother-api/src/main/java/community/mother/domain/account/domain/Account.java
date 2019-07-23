@@ -1,5 +1,6 @@
 package community.mother.domain.account.domain;
 
+import community.mother.domain.model.Email;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +21,8 @@ public class Account {
 	@Column(name = "USER_ID")
 	private Long id;
 
-	@Column(nullable = false)
-	private String email;
+	@Embedded
+	private Email email;
 
 	@Column(nullable = false)
 	private String nickname;
@@ -46,12 +47,12 @@ public class Account {
 	private AccountStatus accountStatus;
 
 	@Builder
-	public Account(String email,
+	public Account(Email email,
 				   String nickname,
 				   String username,
 				   String password
 	) {
-		Assert.hasLength(email, "email should not be empty.");
+//		Assert.hasLength(email, "email should not be empty.");
 		Assert.hasLength(nickname, "nickname should not be empty.");
 		Assert.hasLength(username, "username should not be empty.");
 		Assert.hasLength(password, "password should not be empty.");
@@ -68,7 +69,7 @@ public class Account {
 		return passwordEncoder.matches(password, this.password);
 	}
 
-	public void update(String username, String nickname, String website, String description, String email, String phone, String gender) {
+	public void update(String username, String nickname, String website, String description, Email email, String phone, String gender) {
 		this.username = username;
 		this.nickname = nickname;
 		this.website = website;

@@ -10,6 +10,7 @@ import community.mother.domain.account.dto.response.AccountListResponse;
 import community.mother.domain.account.exception.AccountNotFoundException;
 import community.mother.domain.account.exception.EmailNotFoundException;
 import community.mother.domain.account.exception.PasswordMismatchException;
+import community.mother.domain.model.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,13 +44,13 @@ public class AccountService {
 		return accountRepository.save(account).getId();
 	}
 
-	public void login(LoginAccountParams accountParams, HttpSession session) {
-		String email = accountParams.getEmail();
+	public Long login(LoginAccountParams accountParams, HttpSession session) {
+		Email email = accountParams.getEmail();
 		Account account = accountRepository.findByEmail(email).orElseThrow(EmailNotFoundException::new);
 		if (account.matchPassword(accountParams.getPassword(), passwordEncoder)) {
 			log.info("login success! accountParams={}", accountParams);
 			session.setAttribute("LOGIN_ACCOUNT", account);
-			return;
+			return account.getId();
 		}
 		throw new PasswordMismatchException();
 	}

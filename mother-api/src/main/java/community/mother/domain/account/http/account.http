@@ -14,7 +14,7 @@ POST http://localhost:8080/api/accounts
 Content-Type: application/json
 
 {
-  "email" : "jiwoo627@naver.com",
+  "email" : "..",
   "nickname" : "simple5757",
   "username" : "김지우",
   "password" : "지우짱짱"

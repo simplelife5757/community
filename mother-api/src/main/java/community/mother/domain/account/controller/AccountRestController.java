@@ -7,9 +7,11 @@ import community.mother.domain.account.dto.response.AccountListResponse;
 import community.mother.domain.account.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Slf4j
 @RestController
@@ -24,13 +26,14 @@ public class AccountRestController {
 	}
 
 	@PostMapping
-	public void create(@RequestBody SaveAccountParams accountParams) {
-		accountService.createAccount(accountParams);
+	@ResponseStatus(value = HttpStatus.CREATED)
+	public Long create(@RequestBody @Valid SaveAccountParams accountParams) {
+		return accountService.createAccount(accountParams);
 	}
 
 	@PostMapping("/login")
-	public void login(@RequestBody LoginAccountParams accountParams, HttpSession session) {
-		accountService.login(accountParams, session);
+	public Long login(@RequestBody LoginAccountParams accountParams, HttpSession session) {
+		return accountService.login(accountParams, session);
 	}
 
 	@PostMapping("/{id}")
