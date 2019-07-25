@@ -13,3 +13,26 @@ spring:
       ddl-auto: create
   datasource:
     url: jdbc:h2:~/community
+
+my-app:
+  admin-email: admin@email.com
+  admin-nickname: adad
+  admin-username: admin
+  admin-password: admin!!!
+  user-email: user@email.com
+  user-nickname: usus
+  user-username: user
+  user-password: user!!!
+  client-id: myApp
+  client-secret: pass
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE

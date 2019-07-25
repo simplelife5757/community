@@ -15,6 +15,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static java.time.LocalDateTime.now;
 
@@ -60,11 +61,16 @@ public class Account {
 	@Enumerated(EnumType.STRING)
 	private AccountStatus accountStatus;
 
+	@ElementCollection(fetch = FetchType.EAGER)
+	@Enumerated(EnumType.STRING)
+	private Set<AccountRole> roles;
+
 	@Builder
 	private Account(Email email,
 				   String nickname,
 				   String username,
-				   String password
+				   String password,
+				Set<AccountRole> roles
 	) {
 //		Assert.hasLength(email, "email should not be empty.");
 		Assert.hasLength(nickname, "nickname should not be empty.");
@@ -77,6 +83,7 @@ public class Account {
 		this.password = password;
 //		this.createdAt = now();
 		this.accountStatus = AccountStatus.CREATED;
+		this.roles = roles;
 	}
 
 	public boolean matchPassword(String password, PasswordEncoder passwordEncoder) {
@@ -101,5 +108,9 @@ public class Account {
 
 	public boolean isDeleted() {
 		return this.accountStatus == AccountStatus.DELETED;
+	}
+
+	public Set<AccountRole> getRole() {
+		return roles;
 	}
 }
