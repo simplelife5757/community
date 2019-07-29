@@ -13,6 +13,8 @@ import community.mother.domain.account.exception.AccountNotFoundException;
 import community.mother.domain.account.exception.EmailNotFoundException;
 import community.mother.domain.account.exception.PasswordMismatchException;
 import community.mother.domain.model.Email;
+import community.mother.domain.post.domain.Post;
+import community.mother.domain.post.dto.request.UpdatePostParams;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
