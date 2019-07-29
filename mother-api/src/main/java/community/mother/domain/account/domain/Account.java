@@ -2,6 +2,8 @@ package community.mother.domain.account.domain;
 
 import community.mother.domain.model.Email;
 import community.mother.domain.post.domain.Post;
+import community.mother.domain.post.dto.request.UpdatePostParams;
+import community.mother.domain.post.exception.PostNotFoundException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -118,16 +120,17 @@ public class Account {
 		posts.add(0, post);
 	}
 
-	public void updatePost(Post postToUpdate) {
-		if (!this.posts.contains(postToUpdate)) {
-			//Todo
-		}
+	public void updatePost(Long postId, UpdatePostParams updatePostParams) {
+		Post post = getPostById(postId);
+		post.update(updatePostParams.getContent());
+	}
 
-		for (Post post: posts) {
-			if (post.equals(postToUpdate)) {
-				post.update(postToUpdate);
+	private Post getPostById(Long id) {
+		for (Post post: this.posts) {
+			if (post.has(id)) {
+				return post;
 			}
-		}
+		} throw new PostNotFoundException();
 	}
 
 	public void deletePost(Post post) {

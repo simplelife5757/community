@@ -3,6 +3,7 @@ package community.mother.domain.post.service;
 import community.mother.domain.account.domain.Account;
 import community.mother.domain.account.domain.AccountRepository;
 import community.mother.domain.account.exception.AccountNotFoundException;
+import community.mother.domain.account.exception.UnAuthorizedException;
 import community.mother.domain.account.service.AccountService;
 import community.mother.domain.post.domain.Post;
 import community.mother.domain.post.domain.PostRepository;
@@ -46,13 +47,14 @@ public class PostService {
 
 	public void updatePost(Long postId, UpdatePostParams updatePostParams, Long accountId) {
 		Post post = findPostById(postId);
+		Account account = findAccountById(accountId);
 
-		if (!post.isWriter(accountId)) {
-			// Todo
+		if (!post.isWriter(account)) {
+			throw new UnAuthorizedException();
 		}
 
-		Account account = findAccountById(accountId);
-		account.updatePost(post);
+		account.updatePost(postId, updatePostParams);
+		post.update(updatePostParams.getContent());
 		postRepository.save(post);
 	}
 

@@ -68,11 +68,15 @@ public class Post {
 		this.savedFileName = savedFileName;
 	}
 
-	public void update(Post postToUpdate) {
-		this.content = postToUpdate.getContent();
+	public void update(String content) {
+		this.content = content;
 	}
 
-	public boolean isWriter(Long accountId) {
-		return this.writer.getId().equals(accountId);
+	public boolean isWriter(Account account) {
+		return this.writer.equals(account);
+	}
+
+	public boolean has(Long id) {
+		return this.id.equals(id);
 	}
 }
