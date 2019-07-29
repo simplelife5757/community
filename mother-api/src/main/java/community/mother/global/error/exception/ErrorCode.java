@@ -13,7 +13,8 @@ public enum ErrorCode {
 	EMAIL_EMPTY(400, "A001", "Email is Not Found"),
 	EMAIL_DUPLICATION(400, "A002", "Email is Duplication"),
 	PASSWORD_MISMATCH(400, "A003", "Password is Mismatch"),
-	Account_EMPTY(400, "A004", "Account is Not Found"),
+	ACCOUNT_EMPTY(400, "A004", "Account is Not Found"),
+	ACCOUNT_UNAUTHORIZATION(403, "A005", "Account is UnAuthorization"),
 
 	// Post
 	POST_EMPTY(400, "P001", "Post is Not Found");
