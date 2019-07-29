@@ -1,6 +1,5 @@
 package community.mother.domain.post.controller;
 
-import community.mother.domain.account.domain.Account;
 import community.mother.domain.account.domain.CurrentUser;
 import community.mother.domain.post.dto.request.SavePostParams;
 import community.mother.domain.post.dto.request.UpdatePostParams;

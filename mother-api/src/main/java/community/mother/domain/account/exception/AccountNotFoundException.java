@@ -5,6 +5,6 @@ import community.mother.global.error.exception.ErrorCode;
 
 public class AccountNotFoundException extends EntityNotFoundException {
 	public AccountNotFoundException() {
-		super(ErrorCode.Account_EMPTY);
+		super(ErrorCode.ACCOUNT_EMPTY);
 	}
 }
