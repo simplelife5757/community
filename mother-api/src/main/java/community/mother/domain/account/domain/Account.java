@@ -113,4 +113,24 @@ public class Account {
 	public Set<AccountRole> getRole() {
 		return roles;
 	}
+
+	public void addPost(Post post) {
+		posts.add(0, post);
+	}
+
+	public void updatePost(Post postToUpdate) {
+		if (!this.posts.contains(postToUpdate)) {
+			//Todo
+		}
+
+		for (Post post: posts) {
+			if (post.equals(postToUpdate)) {
+				post.update(postToUpdate);
+			}
+		}
+	}
+
+	public void deletePost(Post post) {
+		this.posts.remove(post);
+	}
 }
