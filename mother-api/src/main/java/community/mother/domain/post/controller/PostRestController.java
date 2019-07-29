@@ -2,6 +2,10 @@ package community.mother.domain.post.controller;
 
 import community.mother.domain.account.domain.Account;
 import community.mother.domain.account.domain.CurrentUser;
+import community.mother.domain.post.dto.request.SavePostParams;
+import community.mother.domain.post.dto.request.UpdatePostParams;
+import community.mother.domain.post.dto.response.PostResponse;
+import community.mother.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,23 +19,23 @@ public class PostRestController {
 	private final PostService postService;
 
 	@GetMapping("/{id}")
-	public PostResponse getPost(@PathVariable Long id) {
-		return postService.getPost(id);
+	public PostResponse readPost(@PathVariable Long id) {
+		return postService.readPost(id);
 	}
 
 	@PostMapping
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public Long create(@RequestBody SavePostParams savePostParams, @CurrentUser Account account) {
-		return postService.createPost(savePostParams, account);
+	public Long create(@RequestBody SavePostParams savePostParams, @CurrentUser Long accountId) {
+		return postService.createPost(savePostParams, accountId);
 	}
 
 	@PostMapping("/{id}")
-	public void update(@PathVariable Long id, @RequestBody UpdatePostParams updatePostParams, @CurrentUser Account account) {
-		return postService.updatePost(id, updatePostParams, account);
+	public void update(@PathVariable Long id, @RequestBody UpdatePostParams updatePostParams, @CurrentUser Long accountId) {
+		postService.updatePost(id, updatePostParams, accountId);
 	}
 
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Long id, @CurrentUser Account account) {
-		return postService.deletePost(id, account);
+	public void delete(@PathVariable Long id, @CurrentUser Long accountId) {
+		postService.deletePost(id, accountId);
 	}
 }
