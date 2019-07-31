@@ -21,8 +21,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PostService {
-	private PostRepository postRepository;
-	private AccountRepository accountRepository;
+	private final PostRepository postRepository;
+	private final AccountRepository accountRepository;
 
 	public PostResponse readPost(Long id) {
 		Post post = postRepository.getOne(id);
@@ -58,6 +58,18 @@ public class PostService {
 		postRepository.save(post);
 	}
 
+	public void deletePost(Long id, Long accountId) {
+		Post post = findPostById(id);
+		Account account = findAccountById(accountId);
+
+		if (!post.isWriter(account)) {
+			throw new UnAuthorizedException();
+		}
+
+		account.deletePost(post);
+		postRepository.delete(post);
+	}
+
 	private Account findAccountById(Long id) {
 		Account account = accountRepository.findById(id).orElseThrow(AccountNotFoundException::new);
 
@@ -66,12 +78,5 @@ public class PostService {
 		}
 
 		return account;
-	}
-
-	public void deletePost(Long id, Long accountId) {
-		Post post = findPostById(id);
-		Account account = findAccountById(accountId);
-		account.deletePost(post);
-		postRepository.delete(post);
 	}
 }
