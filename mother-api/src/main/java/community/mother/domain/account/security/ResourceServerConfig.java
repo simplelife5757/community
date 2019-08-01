@@ -34,9 +34,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 					.permitAll()
 				.anyRequest().authenticated()
 				.and()
-			.csrf()
-				.ignoringAntMatchers("/h2-console/**")
-				.and()
+//			.csrf()
+//				.ignoringAntMatchers("/h2-console/**")
+//				.and()
 			.headers()
 			.frameOptions().disable()
 //				.addHeaderWriter(new XFrameOptionsHeaderWriter(new WhiteListedAllowFromStrategy(Collections.singletonList("localhost"))));

@@ -4,10 +4,7 @@ import community.mother.domain.model.Email;
 import community.mother.domain.post.domain.Post;
 import community.mother.domain.post.dto.request.UpdatePostParams;
 import community.mother.domain.post.exception.PostNotFoundException;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +22,7 @@ import static java.time.LocalDateTime.now;
 @Table(name = "account")
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class Account {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +41,7 @@ public class Account {
 	@Column(nullable = false)
 	private String password;
 
-	@OneToMany(mappedBy = "account", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "writer", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<Post> posts = new ArrayList<>();
 
 	private String website;

@@ -3,10 +3,7 @@ package community.mother.domain.post.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import community.mother.domain.account.domain.Account;
 import community.mother.domain.post.dto.request.UpdatePostParams;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.util.Assert;
@@ -17,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Table(name = "post")
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(of = "id")
 public class Post {
 	@Id
