@@ -1,6 +1,5 @@
 package community.mother.global.error.common;
 
-import community.mother.domain.model.Email;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;

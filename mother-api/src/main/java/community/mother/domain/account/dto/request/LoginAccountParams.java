@@ -1,6 +1,5 @@
 package community.mother.domain.account.dto.request;
 
-import community.mother.domain.model.Email;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -9,10 +8,10 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class LoginAccountParams {
-	private Email email;
+	private String email;
 	private String password;
 
-	public LoginAccountParams(Email email, String password) {
+	public LoginAccountParams(String email, String password) {
 		this.email = email;
 		this.password = password;
 	}

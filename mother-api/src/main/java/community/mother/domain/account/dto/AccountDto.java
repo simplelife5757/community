@@ -2,7 +2,6 @@ package community.mother.domain.account.dto;
 
 import community.mother.domain.account.domain.AccountRole;
 import community.mother.domain.account.domain.AccountStatus;
-import community.mother.domain.model.Email;
 import community.mother.domain.post.domain.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +13,7 @@ import java.util.Set;
 @Getter
 @AllArgsConstructor
 public class AccountDto {
-	private Email email;
+	private String email;
 	private String nickname;
 	private String username;
 	private String password;

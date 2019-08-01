@@ -1,6 +1,5 @@
 package community.mother.domain.account.dto.request;
 
-import community.mother.domain.model.Email;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -13,11 +12,11 @@ public class UpdateAccountParams {
 	private String nickname;
 	private String website;
 	private String description;
-	private Email email;
+	private String email;
 	private String phone;
 	private String gender;
 
-	public UpdateAccountParams(String username, String nickname, String website, String description, Email email, String phone, String gender) {
+	public UpdateAccountParams(String username, String nickname, String website, String description, String email, String phone, String gender) {
 		this.username = username;
 		this.nickname = nickname;
 		this.website = website;

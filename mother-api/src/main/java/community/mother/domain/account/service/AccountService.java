@@ -12,9 +12,6 @@ import community.mother.domain.account.dto.response.AccountListResponse;
 import community.mother.domain.account.exception.AccountNotFoundException;
 import community.mother.domain.account.exception.EmailNotFoundException;
 import community.mother.domain.account.exception.PasswordMismatchException;
-import community.mother.domain.model.Email;
-import community.mother.domain.post.domain.Post;
-import community.mother.domain.post.dto.request.UpdatePostParams;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -63,7 +59,7 @@ public class AccountService implements UserDetailsService {
 	}
 
 	public Long login(LoginAccountParams accountParams, HttpSession session) {
-		Email email = accountParams.getEmail();
+		String email = accountParams.getEmail();
 		Account account = accountRepository.findByEmail(email).orElseThrow(EmailNotFoundException::new);
 		if (account.matchPassword(accountParams.getPassword(), passwordEncoder)) {
 			log.info("login success! accountParams={}", accountParams);
@@ -97,9 +93,9 @@ public class AccountService implements UserDetailsService {
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Account account = accountRepository.findByUsername(username)
-				.orElseThrow(() -> new UsernameNotFoundException(username));
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		Account account = accountRepository.findByEmail(email)
+				.orElseThrow(() -> new UsernameNotFoundException(email));
 		return new AccountAdapter(account);
 	}
 }

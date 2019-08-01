@@ -1,6 +1,5 @@
 package community.mother.domain.account.domain;
 
-import community.mother.domain.model.Email;
 import community.mother.domain.post.domain.Post;
 import community.mother.domain.post.dto.request.UpdatePostParams;
 import community.mother.domain.post.exception.PostNotFoundException;
@@ -11,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +29,8 @@ public class Account {
 	@Column(name = "ACCOUNT_ID")
 	private Long id;
 
-	@Embedded
-	private Email email;
+	@Column(nullable = false, unique = true)
+	private String email;
 
 	@Column(nullable = false)
 	private String nickname;
@@ -66,7 +66,7 @@ public class Account {
 	private Set<AccountRole> roles;
 
 	@Builder
-	private Account(Email email,
+	private Account(String email,
 				   String nickname,
 				   String username,
 				   String password,
@@ -90,7 +90,7 @@ public class Account {
 		return passwordEncoder.matches(password, this.password);
 	}
 
-	public void update(String username, String nickname, String website, String description, Email email, String phone, String gender) {
+	public void update(String username, String nickname, String website, String description, String email, String phone, String gender) {
 		this.username = username;
 		this.nickname = nickname;
 		this.website = website;
