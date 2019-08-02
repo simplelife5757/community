@@ -58,17 +58,6 @@ public class AccountService implements UserDetailsService {
 		return accountParams.getRoles();
 	}
 
-	public Long login(LoginAccountParams accountParams, HttpSession session) {
-		String email = accountParams.getEmail();
-		Account account = accountRepository.findByEmail(email).orElseThrow(EmailNotFoundException::new);
-		if (account.matchPassword(accountParams.getPassword(), passwordEncoder)) {
-			log.info("login success! accountParams={}", accountParams);
-			session.setAttribute("LOGIN_ACCOUNT", account);
-			return account.getId();
-		}
-		throw new PasswordMismatchException();
-	}
-
 	public void updateAccount(Long id, UpdateAccountParams accountParams) {
 		Account account = findAccountById(id);
 		account.update(accountParams.getUsername(), accountParams.getNickname(), accountParams.getWebsite(), accountParams.getDescription()

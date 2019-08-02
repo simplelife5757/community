@@ -31,11 +31,6 @@ public class AccountRestController {
 		return accountService.createAccount(accountParams);
 	}
 
-	@PostMapping("/login")
-	public Long login(@RequestBody LoginAccountParams accountParams, HttpSession session) {
-		return accountService.login(accountParams, session);
-	}
-
 	@PostMapping("/{id}")
 	public void update(@PathVariable Long id, @RequestBody UpdateAccountParams accountParams) {
 		accountService.updateAccount(id, accountParams);
