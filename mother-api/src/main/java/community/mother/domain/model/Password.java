@@ -20,14 +20,16 @@ public class Password {
   @Column(name = "password_ttl")
   private long ttl;
 
-  @Builder
-  public Password(final String value) {
+  private Password(final String value) {
     this.ttl = 1209_604; // 1209_604 is 14 days
     this.value = encodePassword(value);
   }
 
+  public static Password of(String value) {
+    return new Password(value);
+  }
+
   private String encodePassword(String value) {
     return new BCryptPasswordEncoder().encode(value);
-
   }
 }

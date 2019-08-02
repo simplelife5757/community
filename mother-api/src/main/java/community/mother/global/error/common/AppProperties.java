@@ -1,6 +1,5 @@
 package community.mother.global.error.common;
 
-import community.mother.domain.model.Password;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -23,7 +22,7 @@ public class AppProperties {
 	private String adminUsername;
 
 	@NotEmpty
-	private Password adminPassword;
+	private String adminPassword;
 
 	@NotEmpty
 	private String userEmail;
@@ -35,7 +34,7 @@ public class AppProperties {
 	private String userUsername;
 
 	@NotEmpty
-	private Password userPassword;
+	private String userPassword;
 
 	@NotEmpty
 	private String clientId;

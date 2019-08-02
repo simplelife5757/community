@@ -23,10 +23,10 @@ public class SaveAccountParams {
 	private String email;
 	private @NotEmpty String nickname;
 	private @NotEmpty String username;
-	private @NotEmpty Password password;
+	private @NotEmpty String password;
 	private Set<AccountRole> roles = new HashSet<>();
 
-	public SaveAccountParams(String email, String nickname, String username, Password password) {
+	public SaveAccountParams(String email, String nickname, String username, String password) {
 		this.email = email;
 		this.nickname = nickname;
 		this.username = username;
