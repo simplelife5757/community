@@ -1,6 +1,7 @@
 package community.mother.domain.account.dto.request;
 
 import community.mother.domain.account.domain.AccountRole;
+import community.mother.domain.model.Password;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +23,10 @@ public class SaveAccountParams {
 	private String email;
 	private @NotEmpty String nickname;
 	private @NotEmpty String username;
-	private @NotEmpty String password;
+	private @NotEmpty Password password;
 	private Set<AccountRole> roles = new HashSet<>();
 
-	public SaveAccountParams(String email, String nickname, String username, String password) {
+	public SaveAccountParams(String email, String nickname, String username, Password password) {
 		this.email = email;
 		this.nickname = nickname;
 		this.username = username;

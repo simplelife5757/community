@@ -1,5 +1,6 @@
 package community.mother.domain.account.domain;
 
+import community.mother.domain.model.Password;
 import community.mother.domain.post.domain.Post;
 import community.mother.domain.post.dto.request.UpdatePostParams;
 import community.mother.domain.post.exception.PostNotFoundException;
@@ -38,8 +39,7 @@ public class Account {
 	@Column(nullable = false)
 	private String username;
 
-	@Column(nullable = false)
-	private String password;
+	private Password password;
 
 	@OneToMany(mappedBy = "writer", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<Post> posts = new ArrayList<>();
@@ -69,13 +69,13 @@ public class Account {
 	private Account(String email,
 				   String nickname,
 				   String username,
-				   String password,
+				   Password password,
 				Set<AccountRole> roles
 	) {
-//		Assert.hasLength(email, "email should not be empty.");
+		Assert.hasLength(email, "email should not be empty.");
 		Assert.hasLength(nickname, "nickname should not be empty.");
 		Assert.hasLength(username, "username should not be empty.");
-		Assert.hasLength(password, "password should not be empty.");
+//		Assert.hasLength(password, "password should not be empty.");
 
 		this.email = email;
 		this.nickname = nickname;
@@ -85,10 +85,10 @@ public class Account {
 		this.accountStatus = AccountStatus.CREATED;
 		this.roles = roles;
 	}
-
-	public boolean matchPassword(String password, PasswordEncoder passwordEncoder) {
-		return passwordEncoder.matches(password, this.password);
-	}
+//
+//	public boolean matchPassword(String password, PasswordEncoder passwordEncoder) {
+//		return this.password.isMatched(password;
+//	}
 
 	public void update(String username, String nickname, String website, String description, String email, String phone, String gender) {
 		this.username = username;
