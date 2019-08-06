@@ -29,7 +29,7 @@ public class Comment {
 
   @ManyToOne
   @Column(name = "user_id", nullable = false, updatable = false)
-  private Account account;
+  private Account writer;
 
   @Column(nullable = false)
   private String content;
@@ -48,13 +48,13 @@ public class Comment {
 
   @Builder
   private Comment(Post post,
-                  Account account,
+                  Account writer,
                   String content
   ) {
     Assert.hasLength(content, "Content should not be empty.");
 
     this.post = post;
-    this.account = account;
+    this.writer = writer;
     this.content = content;
     this.deleted = false;
   }

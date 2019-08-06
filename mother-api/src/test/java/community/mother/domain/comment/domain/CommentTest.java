@@ -7,11 +7,11 @@ import static community.mother.domain.post.domain.PostTest.getPostFixture;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 
-class CommentTest {
+public class CommentTest {
   public static Comment getCommentFixture() {
     return Comment.builder()
                           .post(getPostFixture())
-                          .account(getAccountFixture())
+                          .writer(getAccountFixture())
                           .content("content").build();
   }
 
@@ -20,7 +20,7 @@ class CommentTest {
     Comment comment = getCommentFixture();
 
     then(comment).hasFieldOrPropertyWithValue("post", comment.getPost())
-        .hasFieldOrPropertyWithValue("account", comment.getAccount())
+        .hasFieldOrPropertyWithValue("writer", comment.getWriter())
         .hasFieldOrPropertyWithValue("content", "content")
         .hasFieldOrPropertyWithValue("deleted", false)
         .hasFieldOrPropertyWithValue("createdAt", comment.getCreatedAt());
