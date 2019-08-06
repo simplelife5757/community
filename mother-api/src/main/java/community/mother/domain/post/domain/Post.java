@@ -38,7 +38,7 @@ public class Post {
 	private LocalDateTime createdAt;
 
 	@UpdateTimestamp
-	private LocalDateTime updateddAt;
+	private LocalDateTime updatedAt;
 
 	private Long likeCount;
 
