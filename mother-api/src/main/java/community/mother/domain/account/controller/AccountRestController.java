@@ -1,7 +1,6 @@
 package community.mother.domain.account.controller;
 
 import community.mother.domain.account.dto.request.UpdateAccountParams;
-import community.mother.domain.account.dto.request.LoginAccountParams;
 import community.mother.domain.account.dto.request.SaveAccountParams;
 import community.mother.domain.account.dto.response.AccountListResponse;
 import community.mother.domain.account.service.AccountService;
@@ -10,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Slf4j

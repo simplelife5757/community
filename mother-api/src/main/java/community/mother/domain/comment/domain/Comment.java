@@ -24,11 +24,11 @@ public class Comment {
   private Long id;
 
   @ManyToOne
-  @Column(name = "post_id", nullable = false, updatable = false)
+  @JoinColumn(name = "post_id", nullable = false, updatable = false)
   private Post post;
 
   @ManyToOne
-  @Column(name = "user_id", nullable = false, updatable = false)
+  @JoinColumn(name = "account_id", nullable = false, updatable = false)
   private Account writer;
 
   @Column(nullable = false)
