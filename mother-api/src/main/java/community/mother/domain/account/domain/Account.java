@@ -7,13 +7,12 @@ import community.mother.domain.post.exception.PostNotFoundException;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -68,10 +67,10 @@ public class Account {
 	@ManyToMany
 	@JoinTable(name = "follow", joinColumns = @JoinColumn(name = "following", referencedColumnName = "account_id"),
 			inverseJoinColumns = @JoinColumn(name = "followed", referencedColumnName = "account_id"))
-	public List<Account> followingAccounts = new ArrayList<>();
+	public Set<Account> followingAccounts = new HashSet<>();
 
 	@ManyToMany(mappedBy = "followingAccounts")
-	public List<Account> followedAccounts = new ArrayList<>();
+	public Set<Account> followedAccounts = new HashSet<>();
 
 	@Builder
 	private Account(String email,
@@ -141,5 +140,23 @@ public class Account {
 
 	public void deletePost(Post post) {
 		this.posts.remove(post);
+	}
+
+	public void addFollowingAccount(Account followingAccount) {
+		this.followingAccounts.add(followingAccount);
+		followingAccount.addFollowedAccount(this);
+	}
+
+	private void addFollowedAccount(Account followedAccount) {
+		this.followedAccounts.add(followedAccount);
+	}
+
+	public void deleteFollowingAccount(Account followingAccount) {
+		this.followingAccounts.remove(followingAccount);
+		followingAccount.deleteFollowedAccount(this);
+	}
+
+	private void deleteFollowedAccount(Account followingAccount) {
+		this.followingAccounts.remove(followingAccount);
 	}
 }
