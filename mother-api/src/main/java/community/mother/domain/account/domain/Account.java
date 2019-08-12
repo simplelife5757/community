@@ -65,6 +65,14 @@ public class Account {
 	@Enumerated(EnumType.STRING)
 	private Set<AccountRole> roles;
 
+	@ManyToMany
+	@JoinTable(name = "follow", joinColumns = @JoinColumn(name = "following", referencedColumnName = "account_id"),
+			inverseJoinColumns = @JoinColumn(name = "followed", referencedColumnName = "account_id"))
+	public List<Account> followingAccounts = new ArrayList<>();
+
+	@ManyToMany(mappedBy = "followingAccounts")
+	public List<Account> followedAccounts = new ArrayList<>();
+
 	@Builder
 	private Account(String email,
 				   String nickname,
