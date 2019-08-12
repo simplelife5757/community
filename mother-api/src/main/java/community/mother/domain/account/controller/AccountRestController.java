@@ -43,13 +43,13 @@ public class AccountRestController {
 	}
 
 	@GetMapping("/{accountNickname}/follows")
-	public void getFollows(@PathVariable String accountNickname) {
-		followService.getFollows(accountNickname);
+	public AccountListResponse getFollows(@PathVariable String accountNickname) {
+		return followService.getFollows(accountNickname);
 	}
 
 	@GetMapping("/{accountNickname}/followed-by")
-	public void getFollowed(@PathVariable String accountNickname) {
-		followService.getFollowed(accountNickname);
+	public AccountListResponse getFollowed(@PathVariable String accountNickname) {
+		return followService.getFollowed(accountNickname);
 	}
 
 	@PostMapping("/self/follows/{accountNickname}")
