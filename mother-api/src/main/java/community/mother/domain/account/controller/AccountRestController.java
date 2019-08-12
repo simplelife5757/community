@@ -1,9 +1,11 @@
 package community.mother.domain.account.controller;
 
+import community.mother.domain.account.domain.CurrentUser;
 import community.mother.domain.account.dto.request.UpdateAccountParams;
 import community.mother.domain.account.dto.request.SaveAccountParams;
 import community.mother.domain.account.dto.response.AccountListResponse;
 import community.mother.domain.account.service.AccountService;
+import community.mother.domain.account.service.FollowService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AccountRestController {
 	private final AccountService accountService;
+	private final FollowService followService;
 
 	@GetMapping
 	public AccountListResponse getAccounts() {
@@ -37,5 +40,25 @@ public class AccountRestController {
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
 		accountService.deleteAccount(id);
+	}
+
+	@GetMapping("/{accountNickname}/follows")
+	public void getFollows(@PathVariable String accountNickname) {
+		followService.getFollows(accountNickname);
+	}
+
+	@GetMapping("/{accountNickname}/followed-by")
+	public void getFollowed(@PathVariable String accountNickname) {
+		followService.getFollowed(accountNickname);
+	}
+
+	@PostMapping("/self/follows/{accountNickname}")
+	public void createFollow(@PathVariable String accountNickname, @CurrentUser Long accountId) {
+		followService.createFollow(accountNickname, accountId);
+	}
+
+	@DeleteMapping("/self/follows/{accountNickname}")
+	public void deleteFollow(@PathVariable String accountNickname, @CurrentUser Long accountId) {
+		followService.deleteFollow(accountNickname, accountId);
 	}
 }
