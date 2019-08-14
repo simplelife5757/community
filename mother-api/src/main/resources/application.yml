@@ -13,6 +13,7 @@ spring:
       ddl-auto: create
   datasource:
     url: jdbc:h2:~/community
+    data: classpath:schema-h2.sql
 google:
   client:
     clientId: 448574013114-pf7qpdi0n7nqqjcuj50l5vq7kras4kqf.apps.googleusercontent.com

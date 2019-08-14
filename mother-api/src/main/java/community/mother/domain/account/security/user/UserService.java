@@ -1,28 +1,34 @@
 package community.mother.domain.account.security.user;
 
-import community.mother.domain.account.security.social.userconnection.UserConnection;
-import lombok.AllArgsConstructor;
+import community.mother.domain.account.security.GoogleUser;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * Created by jojoldu@gmail.com on 2017. 8. 16.
+ * Blog : http://jojoldu.tistory.com
+ * Github : https://github.com/jojoldu
+ */
 
 @Service
-@AllArgsConstructor
 public class UserService {
 
-  private final UserRepository userRepository;
+  private UserRepository userRepository;
 
-  public User signUp(UserConnection userConnection) {
-    final User user = User.signUp(userConnection);
-    return userRepository.save(user);
+  public UserService(UserRepository userRepository) {
+    this.userRepository = userRepository;
   }
 
-  public User findBySocial(UserConnection userConnection) {
-    final User user = userRepository.findBySocial(userConnection);
-    if (user == null) throw new RuntimeException();
-    return user;
-  }
+  @Transactional
+  public User getOrSave(GoogleUser google){
+    User savedUser = userRepository.findByEmail(google.getEmail());
 
-  public boolean isExistUser(UserConnection userConnection) {
-    final User user = userRepository.findBySocial(userConnection);
-    return (user != null);
+    if(savedUser == null){
+      User newUser = google.toEntity();
+      newUser.addRole(new UserRole("ROLE_USER"));
+      savedUser = userRepository.save(newUser);
+    }
+
+    return savedUser;
   }
 }
