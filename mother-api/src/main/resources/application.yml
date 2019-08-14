@@ -13,6 +13,19 @@ spring:
       ddl-auto: create
   datasource:
     url: jdbc:h2:~/community
+google:
+  client:
+    clientId: 448574013114-pf7qpdi0n7nqqjcuj50l5vq7kras4kqf.apps.googleusercontent.com
+    clientSecret: WF7O1Hs6-g0y1ed_CYTpwQdE
+    accessTokenUri: https://www.googleapis.com/oauth2/v4/token
+    userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
+    clientAuthenticationScheme: form
+    scope:
+      - email
+      - profile
+  resource:
+    userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+
 
 my-app:
   admin-email: admin@email.com
